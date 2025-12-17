@@ -1,0 +1,72 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <gazebo reference="${namespace}caster_back_right_link">
+    <mu1>0.001</mu1>
+    <mu2>0.001</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1.0</maxVel>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+
+  <gazebo reference="${namespace}caster_back_left_link">
+    <mu1>0.001</mu1>
+    <mu2>0.001</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>1.0</maxVel>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+  
+  <gazebo reference="${namespace}wheel_left_link">
+    <mu1>10.0</mu1>
+    <mu2>10.0</mu2>
+    <kp>500000.0</kp>
+    <kd>10.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>0.1</maxVel>
+    <fdir1>1 0 0</fdir1>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+
+  <gazebo reference="${namespace}wheel_right_link">
+    <mu1>10.0</mu1>
+    <mu2>10.0</mu2>
+    <kp>500000.0</kp>
+    <kd>10.0</kd>
+    <minDepth>0.001</minDepth>
+    <maxVel>0.1</maxVel>
+    <fdir1>1 0 0</fdir1>
+    <material>Gazebo/FlatBlack</material>
+  </gazebo>
+
+  <!--
+  <gazebo>
+    <plugin name="turtlebot3_diff_drive" filename="libgazebo_ros_diff_drive.so">
+
+      <left_joint>${namespace}wheel_left_joint</left_joint>
+      <right_joint>${namespace}wheel_right_joint</right_joint>
+
+      <wheel_separation>0.288</wheel_separation>
+      <wheel_diameter>0.066</wheel_diameter>
+
+      <max_wheel_torque>20</max_wheel_torque>
+      <max_wheel_acceleration>5.0</max_wheel_acceleration>
+
+      <command_topic>cmd_vel</command_topic>
+      <odometry_topic>odom</odometry_topic>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>${namespace}base_footprint</robot_base_frame>
+
+      <publish_odom_tf>true</publish_odom_tf>
+      <publish_wheel_tf>true</publish_wheel_tf>
+      <ros_qos_qos_profile>default</ros_qos_qos_profile>
+      <update_rate>30.0</update_rate>
+    </plugin>
+  </gazebo>
+  -->
+
+</robot>

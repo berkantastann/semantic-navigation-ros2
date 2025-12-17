@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<robot name="turtlebot3_waffle" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find robot_description)/urdf/materials.xacro" />
+
+  <xacro:include filename="$(find robot_description)/urdf/waffle_base.xacro" />
+
+  <xacro:include filename="$(find robot_description)/urdf/waffle_sensors.xacro" />
+
+  <!-- <xacro:include filename="$(find robot_description)/urdf/waffle_diff_drive.xacro" /> -->
+
+  <xacro:include filename="$(find robot_description)/urdf/waffle_ros2_controller.xacro" />
+
+</robot>

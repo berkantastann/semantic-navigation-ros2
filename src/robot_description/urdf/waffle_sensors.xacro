@@ -1,0 +1,181 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <joint name="${namespace}imu_joint" type="fixed">
+    <parent link="${namespace}base_link"/>
+    <child link="${namespace}imu_link"/>
+    <origin xyz="0.0 0 0.068" rpy="0 0 0"/>
+  </joint>
+
+  <link name="${namespace}imu_link"/>
+
+  <gazebo reference="${namespace}imu_link">
+    <sensor name="tb3_imu" type="imu">
+      <always_on>true</always_on>
+      <update_rate>200</update_rate>
+      <imu>
+        <angular_velocity>
+          <x><noise type="gaussian"><mean>0.0</mean><stddev>2e-4</stddev></noise></x>
+          <y><noise type="gaussian"><mean>0.0</mean><stddev>2e-4</stddev></noise></y>
+          <z><noise type="gaussian"><mean>0.0</mean><stddev>2e-4</stddev></noise></z>
+        </angular_velocity>
+        <linear_acceleration>
+          <x><noise type="gaussian"><mean>0.0</mean><stddev>1.7e-2</stddev></noise></x>
+          <y><noise type="gaussian"><mean>0.0</mean><stddev>1.7e-2</stddev></noise></y>
+          <z><noise type="gaussian"><mean>0.0</mean><stddev>1.7e-2</stddev></noise></z>
+        </linear_acceleration>
+      </imu>
+      <plugin name="turtlebot3_imu" filename="libgazebo_ros_imu_sensor.so">
+        <ros>
+          <namespace>${namespace}</namespace>
+          <remapping>~/out:=imu</remapping>
+        </ros>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <joint name="${namespace}scan_joint" type="fixed">
+    <parent link="${namespace}base_link"/>
+    <child link="${namespace}base_scan"/>
+    <origin xyz="-0.064 0 0.122" rpy="0 0 0"/>
+  </joint>
+
+  <link name="${namespace}base_scan">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://turtlebot3_description/meshes/sensors/lds.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0.015 0 -0.0065" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.0315" radius="0.055"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.114" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001" />
+    </inertial>
+  </link>
+
+  <gazebo reference="${namespace}base_scan">
+    <sensor name="hls_lfcd_lds" type="ray">
+      <always_on>true</always_on>
+      <visualize>true</visualize> <update_rate>5</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>0.0</min_angle>
+            <max_angle>6.28319</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.120</min>
+          <max>3.5</max>
+          <resolution>0.015</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="turtlebot3_laserscan" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <namespace>${namespace}</namespace>
+          <remapping>~/out:=scan</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+        <frame_name>base_scan</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <joint name="${namespace}camera_joint" type="fixed">
+    <origin xyz="0.064 -0.065 0.094" rpy="0 0 0"/>
+    <parent link="${namespace}base_link"/>
+    <child link="${namespace}camera_link"/>
+  </joint>
+
+  <link name="${namespace}camera_link">
+    <visual>
+     <origin xyz="0 0 0" rpy="1.57 0 1.57"/>
+      <geometry>
+       <mesh filename="package://turtlebot3_description/meshes/sensors/r200.dae" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.003 0.065 0.007" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.012 0.132 0.020"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="${namespace}camera_rgb_joint" type="fixed">
+    <origin xyz="0.005 0.018 0.013" rpy="0 0 0"/>
+    <parent link="${namespace}camera_link"/>
+    <child link="${namespace}camera_rgb_frame"/>
+  </joint>
+  <link name="${namespace}camera_rgb_frame"/>
+
+  <joint name="${namespace}camera_rgb_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="-1.57 0 -1.57"/>
+    <parent link="${namespace}camera_rgb_frame"/>
+    <child link="${namespace}camera_rgb_optical_frame"/>
+  </joint>
+  <link name="${namespace}camera_rgb_optical_frame"/>
+
+  <joint name="${namespace}camera_depth_joint" type="fixed">
+    <origin xyz="0.005 0.028 0.013" rpy="0 0 0"/>
+    <parent link="${namespace}camera_link"/>
+    <child link="${namespace}camera_depth_frame"/>
+  </joint>
+  <link name="${namespace}camera_depth_frame"/>
+
+  <joint name="${namespace}camera_depth_optical_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="-1.57 0 -1.57"/>
+    <parent link="${namespace}camera_depth_frame"/>
+    <child link="${namespace}camera_depth_optical_frame"/>
+  </joint>
+  <link name="${namespace}camera_depth_optical_frame"/>
+
+  <gazebo reference="${namespace}camera_rgb_frame">
+    <sensor name="camera" type="camera">
+      <always_on>true</always_on>
+      <visualize>true</visualize>
+      <update_rate>30</update_rate>
+      <camera name="intel_realsense_r200">
+        <horizontal_fov>1.02974</horizontal_fov>
+        <image>
+          <width>1920</width>
+          <height>1080</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <plugin name="camera_driver" filename="libgazebo_ros_camera.so">
+        <ros>
+          <namespace>${namespace}</namespace>
+        </ros>
+        <camera_name>camera</camera_name>
+        <frame_name>camera_rgb_optical_frame</frame_name>
+        <hack_baseline>0.07</hack_baseline>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>
