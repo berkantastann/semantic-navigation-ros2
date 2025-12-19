@@ -1,49 +1,52 @@
 <?xml version="1.0" ?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
+  <!-- BACK RIGHT CASTER -->
   <gazebo reference="${namespace}caster_back_right_link">
-    <mu1>0.001</mu1>
-    <mu2>0.001</mu2>
-    <kp>1000000.0</kp>
-    <kd>100.0</kd>
+    <mu1>0.03</mu1>
+    <mu2>0.03</mu2>
+    <kp>150000.0</kp>
+    <kd>40.0</kd>
     <minDepth>0.001</minDepth>
-    <maxVel>1.0</maxVel>
+    <maxVel>0.5</maxVel>
     <material>Gazebo/FlatBlack</material>
   </gazebo>
 
+  <!-- BACK LEFT CASTER -->
   <gazebo reference="${namespace}caster_back_left_link">
-    <mu1>0.001</mu1>
-    <mu2>0.001</mu2>
-    <kp>1000000.0</kp>
-    <kd>100.0</kd>
+    <mu1>0.03</mu1>
+    <mu2>0.03</mu2>
+    <kp>150000.0</kp>
+    <kd>40.0</kd>
     <minDepth>0.001</minDepth>
-    <maxVel>1.0</maxVel>
+    <maxVel>0.5</maxVel>
     <material>Gazebo/FlatBlack</material>
   </gazebo>
-  
+
+  <!-- LEFT WHEEL -->
   <gazebo reference="${namespace}wheel_left_link">
-    <mu1>10.0</mu1>
-    <mu2>10.0</mu2>
-    <kp>500000.0</kp>
-    <kd>10.0</kd>
+    <mu1>1.0</mu1>
+    <mu2>0.02</mu2>
+    <kp>200000.0</kp>
+    <kd>3.0</kd>
     <minDepth>0.001</minDepth>
-    <maxVel>0.1</maxVel>
+    <maxVel>0.05</maxVel>
     <fdir1>1 0 0</fdir1>
     <material>Gazebo/FlatBlack</material>
   </gazebo>
 
+  <!-- RIGHT WHEEL -->
   <gazebo reference="${namespace}wheel_right_link">
-    <mu1>10.0</mu1>
-    <mu2>10.0</mu2>
-    <kp>500000.0</kp>
-    <kd>10.0</kd>
+    <mu1>1.0</mu1>
+    <mu2>0.02</mu2>
+    <kp>200000.0</kp>
+    <kd>3.0</kd>
     <minDepth>0.001</minDepth>
-    <maxVel>0.1</maxVel>
+    <maxVel>0.05</maxVel>
     <fdir1>1 0 0</fdir1>
     <material>Gazebo/FlatBlack</material>
   </gazebo>
 
-  <!--
   <gazebo>
     <plugin name="turtlebot3_diff_drive" filename="libgazebo_ros_diff_drive.so">
 
@@ -67,6 +70,6 @@
       <update_rate>30.0</update_rate>
     </plugin>
   </gazebo>
-  -->
+
 
 </robot>

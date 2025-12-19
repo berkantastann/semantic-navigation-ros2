@@ -12,7 +12,13 @@
   <gazebo reference="${namespace}imu_link">
     <sensor name="tb3_imu" type="imu">
       <always_on>true</always_on>
-      <update_rate>200</update_rate>
+      <update_rate>50</update_rate>
+      <visualize>true</visualize>
+      <topic>imu</topic>
+      
+      <frame_id>${namespace}imu_link</frame_id>
+      <ign_frame_id>${namespace}imu_link</ign_frame_id>
+
       <imu>
         <angular_velocity>
           <x><noise type="gaussian"><mean>0.0</mean><stddev>2e-4</stddev></noise></x>
@@ -25,12 +31,6 @@
           <z><noise type="gaussian"><mean>0.0</mean><stddev>1.7e-2</stddev></noise></z>
         </linear_acceleration>
       </imu>
-      <plugin name="turtlebot3_imu" filename="libgazebo_ros_imu_sensor.so">
-        <ros>
-          <namespace>${namespace}</namespace>
-          <remapping>~/out:=imu</remapping>
-        </ros>
-      </plugin>
     </sensor>
   </gazebo>
 
@@ -62,9 +62,15 @@
   </link>
 
   <gazebo reference="${namespace}base_scan">
-    <sensor name="hls_lfcd_lds" type="ray">
+    <sensor name="hls_lfcd_lds" type="gpu_lidar">
+      <topic>scan</topic>
       <always_on>true</always_on>
-      <visualize>true</visualize> <update_rate>5</update_rate>
+      <visualize>true</visualize>
+      <update_rate>5</update_rate>
+      
+      <frame_id>${namespace}base_scan</frame_id>
+      <ign_frame_id>${namespace}base_scan</ign_frame_id>
+      
       <ray>
         <scan>
           <horizontal>
@@ -85,14 +91,6 @@
           <stddev>0.01</stddev>
         </noise>
       </ray>
-      <plugin name="turtlebot3_laserscan" filename="libgazebo_ros_ray_sensor.so">
-        <ros>
-          <namespace>${namespace}</namespace>
-          <remapping>~/out:=scan</remapping>
-        </ros>
-        <output_type>sensor_msgs/LaserScan</output_type>
-        <frame_name>base_scan</frame_name>
-      </plugin>
     </sensor>
   </gazebo>
 
@@ -147,9 +145,14 @@
 
   <gazebo reference="${namespace}camera_rgb_frame">
     <sensor name="camera" type="camera">
+      <topic>camera/image</topic>
       <always_on>true</always_on>
       <visualize>true</visualize>
       <update_rate>30</update_rate>
+      
+      <frame_id>${namespace}camera_rgb_optical_frame</frame_id>
+      <ign_frame_id>${namespace}camera_rgb_optical_frame</ign_frame_id>
+      
       <camera name="intel_realsense_r200">
         <horizontal_fov>1.02974</horizontal_fov>
         <image>
@@ -167,14 +170,6 @@
           <stddev>0.007</stddev>
         </noise>
       </camera>
-      <plugin name="camera_driver" filename="libgazebo_ros_camera.so">
-        <ros>
-          <namespace>${namespace}</namespace>
-        </ros>
-        <camera_name>camera</camera_name>
-        <frame_name>camera_rgb_optical_frame</frame_name>
-        <hack_baseline>0.07</hack_baseline>
-      </plugin>
     </sensor>
   </gazebo>
 
