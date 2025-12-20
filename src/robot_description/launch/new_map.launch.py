@@ -13,14 +13,13 @@ def generate_launch_description():
     file_subpath = 'urdf/my_waffle.urdf.xacro'
 
     pkg_path = get_package_share_directory(pkg_name)
-    
     xacro_file = os.path.join(pkg_path, file_subpath)
+    
+    ekf_config_path = os.path.join(pkg_path, 'config', 'ekf.yaml')
 
     robot_description_raw = xacro.process_file(xacro_file).toxml()
     
-    world_file_path = os.path.join(pkg_path, 'worlds', 'waffle_map.sdf')
-
-    ekf_config_path = os.path.join(pkg_path, 'config', 'ekf.yaml')
+    world_file_path = os.path.join(pkg_path, 'worlds', 'tugbot_warehouse.sdf')
 
     ign_gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -42,7 +41,9 @@ def generate_launch_description():
         executable='create',
         arguments=['-topic', 'robot_description',
                    '-name', 'my_waffle_bot',
-                   '-z', '0.1'], 
+                   '-x', '13.0',
+                   '-y', '-10.0',
+                   '-z', '0.2'], 
         output='screen'
     )
 
@@ -60,6 +61,7 @@ def generate_launch_description():
         output='screen'
     )
 
+    # TF Düzeltmeleri
     lidar_tf_fix = Node(
         package='tf2_ros',
         executable='static_transform_publisher',
@@ -79,15 +81,16 @@ def generate_launch_description():
     diff_drive_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["diff_drive_base_controller"],
+        arguments=["diff_drive_base_controller", "--controller-manager-timeout", "30"],
     )
 
     joint_state_spawner = Node(
         package="controller_manager",
         executable="spawner",
-        arguments=["joint_state_broadcaster"],
+        arguments=["joint_state_broadcaster", "--controller-manager-timeout", "30"],
     )
 
+    # EKF NODE (robot_localization) 
     ekf_node = Node(
         package='robot_localization',
         executable='ekf_node',
@@ -99,7 +102,6 @@ def generate_launch_description():
         ]
     )
 
-
     return LaunchDescription([
         ign_gazebo,
         node_robot_state_publisher,
@@ -109,5 +111,5 @@ def generate_launch_description():
         camera_tf_fix, 
         diff_drive_spawner,
         joint_state_spawner,
-        ekf_node
+        ekf_node, 
     ])

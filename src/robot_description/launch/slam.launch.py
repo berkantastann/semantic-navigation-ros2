@@ -7,12 +7,10 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     
-    # Config dosyasının yolunu bul
     pkg_name = 'robot_description'
     config_file = 'config/mapper_params_online_sync.yaml'
     config_path = os.path.join(get_package_share_directory(pkg_name), config_file)
 
-    # Simülasyon zamanı argümanı (Varsayılan True)
     use_sim_time = LaunchConfiguration('use_sim_time')
     declare_use_sim_time = DeclareLaunchArgument(
         'use_sim_time',
