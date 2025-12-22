@@ -36,14 +36,13 @@ def generate_launch_description():
                      'use_sim_time': True}]
     )
 
+   
     spawn_entity = Node(
         package='ros_gz_sim',
         executable='create',
         arguments=['-topic', 'robot_description',
                    '-name', 'my_waffle_bot',
-                   '-x', '13.0',
-                   '-y', '-10.0',
-                   '-z', '0.2'], 
+                   '-z', '0.1'], 
         output='screen'
     )
 

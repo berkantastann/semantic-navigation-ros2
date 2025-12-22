@@ -11,4 +11,12 @@
 
   <xacro:include filename="$(find robot_description)/urdf/waffle_ros2_controller.xacro" />
 
+  <!-- 
+  <gazebo>
+    <plugin filename="libignition-gazebo-imu-system.so"
+            name="ignition::gazebo::systems::Imu">
+    </plugin>
+  </gazebo>  
+  -->
+
 </robot>

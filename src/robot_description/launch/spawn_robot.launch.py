@@ -18,7 +18,7 @@ def generate_launch_description():
 
     robot_description_raw = xacro.process_file(xacro_file).toxml()
     
-    world_file_path = os.path.join(pkg_path, 'worlds', 'waffle_map.sdf')
+    world_file_path = os.path.join(pkg_path, 'worlds', 'custom_objects.sdf')
 
     ekf_config_path = os.path.join(pkg_path, 'config', 'ekf.yaml')
 
@@ -42,11 +42,10 @@ def generate_launch_description():
         executable='create',
         arguments=['-topic', 'robot_description',
                    '-name', 'my_waffle_bot',
-                   '-z', '0.1'], 
+                   '-z', '0.1'],
         output='screen'
     )
 
-    # KÖPRÜ (BRIDGE)
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
@@ -56,6 +55,7 @@ def generate_launch_description():
             '/imu@sensor_msgs/msg/Imu[ignition.msgs.IMU',
             '/camera/image@sensor_msgs/msg/Image[ignition.msgs.Image',
             '/camera/camera_info@sensor_msgs/msg/CameraInfo[ignition.msgs.CameraInfo',
+            '/camera/depth_image@sensor_msgs/msg/Image[ignition.msgs.Image',
         ],
         output='screen'
     )
@@ -73,6 +73,22 @@ def generate_launch_description():
         executable='static_transform_publisher',
         name='camera_tf_fix',
         arguments=['0', '0', '0', '0', '0', '0', 'camera_rgb_optical_frame', 'my_waffle_bot/base_footprint/camera'],
+        output='screen'
+    )
+    
+    depth_tf_fix = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='depth_tf_fix',
+        arguments=['0', '0', '0', '0', '0', '0', 'camera_depth_optical_frame', 'my_waffle_bot/base_footprint/camera_depth'],
+        output='screen'
+    )
+
+    imu_tf_fix = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='imu_tf_fix',
+        arguments=['0', '0', '0', '0', '0', '0', 'imu_link', 'my_waffle_bot/base_footprint/tb3_imu'],
         output='screen'
     )
 
@@ -99,6 +115,25 @@ def generate_launch_description():
         ]
     )
 
+    delayed_joint_broad_spawner = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=spawn_entity,
+            on_exit=[joint_state_spawner],
+        )
+    )
+
+    delayed_diff_drive_spawner = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=joint_state_spawner,
+            on_exit=[diff_drive_spawner],
+        )
+    )
+    delayed_ekf_node = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=spawn_entity,
+            on_exit=[ekf_node],
+        )
+    )
 
     return LaunchDescription([
         ign_gazebo,
@@ -107,7 +142,9 @@ def generate_launch_description():
         bridge,
         lidar_tf_fix,  
         camera_tf_fix, 
-        diff_drive_spawner,
-        joint_state_spawner,
-        ekf_node
+        depth_tf_fix,
+        imu_tf_fix,
+        delayed_joint_broad_spawner,
+        delayed_diff_drive_spawner,
+        delayed_ekf_node
     ])

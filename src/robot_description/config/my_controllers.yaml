@@ -26,8 +26,23 @@ diff_drive_base_controller:
     pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
     twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.01]
 
-    open_loop: true
-    enable_odom_tf: false
+    open_loop: false 
+    
+    enable_odom_tf: false 
 
     cmd_vel_timeout: 0.5
     use_stamped_vel: false
+
+    linear:
+      x:
+        has_velocity_limits: true
+        max_velocity: 0.80   
+        has_acceleration_limits: true
+        max_acceleration: 1.0 
+
+    angular:
+      z:
+        has_velocity_limits: true
+        max_velocity: 1.82
+        has_acceleration_limits: true
+        max_acceleration: 2.0 

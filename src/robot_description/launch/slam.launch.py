@@ -8,7 +8,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     
     pkg_name = 'robot_description'
-    config_file = 'config/mapper_params_online_sync.yaml'
+    config_file = 'config/slam.yaml'
     config_path = os.path.join(get_package_share_directory(pkg_name), config_file)
 
     use_sim_time = LaunchConfiguration('use_sim_time')

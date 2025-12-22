@@ -173,4 +173,25 @@
     </sensor>
   </gazebo>
 
+  <gazebo reference="${namespace}camera_depth_frame">
+    <sensor name="camera_depth" type="depth_camera">
+      <topic>camera/depth_image</topic> <always_on>true</always_on>
+      <visualize>true</visualize>
+      <update_rate>30</update_rate>
+      
+      <frame_id>${namespace}camera_depth_optical_frame</frame_id>
+      <ign_frame_id>${namespace}camera_depth_optical_frame</ign_frame_id>
+      
+      <camera name="intel_realsense_r200_depth">
+        <horizontal_fov>1.02974</horizontal_fov>
+        <image>
+          <width>640</width>   <height>480</height>
+          <format>R_FLOAT32</format> </image>
+        <clip>
+          <near>0.1</near>
+          <far>10.0</far> </clip>
+      </camera>
+    </sensor>
+  </gazebo>
+
 </robot>
