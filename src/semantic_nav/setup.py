@@ -27,6 +27,7 @@ setup(
     entry_points={
         'console_scripts': [
             "yolo_detector = semantic_nav.yolo_node:main",
+            "semantic_mapper = semantic_nav.semantic_mapper:main",
         ],
     },
 )

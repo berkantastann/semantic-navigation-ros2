@@ -10,7 +10,7 @@ def generate_launch_description():
     pkg_name = 'robot_description'
     pkg_share = get_package_share_directory(pkg_name)
 
-    map_file_path = os.path.join(pkg_share, 'maps', 'waffle_map.yaml')
+    map_file_path = os.path.join(pkg_share, 'maps', 'maps_edited.yaml')
 
     spawn_robot_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(

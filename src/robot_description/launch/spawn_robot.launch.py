@@ -18,7 +18,7 @@ def generate_launch_description():
 
     robot_description_raw = xacro.process_file(xacro_file).toxml()
     
-    world_file_path = os.path.join(pkg_path, 'worlds', 'custom_objects.sdf')
+    world_file_path = os.path.join(pkg_path, 'worlds', 'tugbot_warehouse.sdf')
 
     ekf_config_path = os.path.join(pkg_path, 'config', 'ekf.yaml')
 
