@@ -109,6 +109,12 @@
       <pose>0 0 -0.09 0 0 0</pose>
     </include>
 
+     <include>
+      <uri>https://fuel.gazebosim.org/1.0/OpenRobotics/models/walking%20person</uri>
+      <name>pedestrian</name>
+      <pose>0.214794 15 -0 -0 -0 -1.57286</pose>
+    </include>
+
     <include>
       <uri>
         https://fuel.ignitionrobotics.org/1.0/MovAi/models/Tugbot-charging-station

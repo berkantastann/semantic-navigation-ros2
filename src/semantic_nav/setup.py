@@ -28,6 +28,7 @@ setup(
         'console_scripts': [
             "yolo_detector = semantic_nav.yolo_node:main",
             "semantic_mapper = semantic_nav.semantic_mapper:main",
+            "semantic_nav_command = semantic_nav.semantic_nav_command:main",
         ],
     },
 )

@@ -8,7 +8,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
     
     pkg_name = 'robot_description'
-    config_file = 'config/slam_params_orj.yaml'
+    config_file = 'config/mapper_params_online_async.yaml'
     config_path = os.path.join(get_package_share_directory(pkg_name), config_file)
 
     use_sim_time = LaunchConfiguration('use_sim_time')
@@ -30,12 +30,17 @@ def generate_launch_description():
         ]
     )
 
+    rviz_config_path = os.path.join(
+        get_package_share_directory(pkg_name), 'config', "slam_config_file.rviz"
+    )
+    
+    
     rviz_node = Node(
         package='rviz2',
         executable='rviz2',
         name='rviz2',
         output='screen',
-        arguments=['-d', os.path.join(get_package_share_directory(pkg_name), 'config', 'slam.rviz')],
+        arguments=['-d', rviz_config_path],
         parameters=[{'use_sim_time': use_sim_time}]
     )
         
