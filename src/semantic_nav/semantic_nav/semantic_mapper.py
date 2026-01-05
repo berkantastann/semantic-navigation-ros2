@@ -26,16 +26,13 @@ class SemanticMapper(Node):
     def __init__(self):
         super().__init__('semantic_mapper')
 
-        # ---------------- TF ----------------
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
 
-        # ---------------- MODEL ----------------
         pkg_dir = get_package_share_directory('semantic_nav')
         model_path = os.path.join(pkg_dir, 'models', 'yolov8n.onnx')
         self.model = YOLO(model_path, task='detect')
 
-        # ---------------- DB ----------------
         self.db_path = os.path.expanduser("~/Desktop/robot_ws/src/semantic_nav/db/semantic_db.json")
         self.detected_objects = []
 
@@ -54,7 +51,6 @@ class SemanticMapper(Node):
             except Exception as e:
                 self.get_logger().warn(f"DB okunamadı: {e}")
 
-        # ---------------- SUBSCRIBERS ----------------
         self.rgb_sub = message_filters.Subscriber(
             self, Image, '/camera/image',
             qos_profile=qos_profile_sensor_data)
@@ -71,7 +67,6 @@ class SemanticMapper(Node):
             CameraInfo, '/camera/camera_info',
             self.info_callback, qos_profile_sensor_data)
 
-        # ---------------- MARKER PUBLISHER (RViz FIX) ----------------
         marker_qos = QoSProfile(
             depth=10,
             durability=DurabilityPolicy.TRANSIENT_LOCAL
@@ -82,16 +77,13 @@ class SemanticMapper(Node):
 
         self.br = CvBridge()
 
-        # ---------------- CAMERA PARAMS ----------------
         self.fx = None
 
-        # ---------------- PERFORMANCE ----------------
         self.frame_counter = 0
 
-        # Node açılır açılmaz markerları bas
         self.create_timer(1.0, self.publish_all_markers)
 
-        self.get_logger().info("✅ Semantic Mapper ÇALIŞIYOR (RViz Garantili)")
+        self.get_logger().info("✅ Semantic Mapper ÇALIŞIYOR")
 
 
     def info_callback(self, msg):
