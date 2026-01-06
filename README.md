@@ -7,19 +7,14 @@ YOLOv8 nesne tespiti ve semantik haritalama kullanarak otonom navigasyon yapabil
 ## 📹 Demo
 
 ### Base to Person
-<video width="100%" controls>
-  <source src="file:///home/berkantastan/Downloads/base_to_person.mp4"
-   type="video/mp4">
-  Tarayıcınız video oynatmayı desteklemiyor.
-</video>
+[![Base to Person](https://img.youtube.com/vi/e_6M4uXf1q8/0.jpg)](https://youtu.be/e_6M4uXf1q8)
+
+**📺 [Base to Person - YouTube](https://youtu.be/e_6M4uXf1q8)**
 
 ### Person to Base
-<video width="100%" controls>
-  <source src="file:///home/berkantastan/Downloads/person_to_base.mp4
-  " 
-  type="video/mp4">
-  Tarayıcınız video oynatmayı desteklemiyor.
-</video> 
+[![Person to Base](https://img.youtube.com/vi/nbblDvhBoec/0.jpg)](https://youtu.be/nbblDvhBoec)
+
+**📺 [Person to Base - YouTube](https://youtu.be/nbblDvhBoec)** 
 
 ## 🗺️ SLAM Haritası
 
