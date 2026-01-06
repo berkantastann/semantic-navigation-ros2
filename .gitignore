@@ -9,3 +9,7 @@ __pycache__/
 .vscode/
 .idea/
 .DS_Store
+
+# Video files
+*.mp4
+*.MP4
