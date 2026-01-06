@@ -6,8 +6,15 @@ YOLOv8 nesne tespiti ve semantik haritalama kullanarak otonom navigasyon yapabil
 
 ## 📹 Demo
 
-<video width="100%" controls poster="readme/demo.gif">
-  <source src="readme/demo.mp4" type="video/mp4">
+### Base to Person
+<video width="100%" controls>
+  <source src="readme/base_to_person.mp4" type="video/mp4">
+  Tarayıcınız video oynatmayı desteklemiyor.
+</video>
+
+### Person to Base
+<video width="100%" controls>
+  <source src="readme/person_to_base.mp4" type="video/mp4">
   Tarayıcınız video oynatmayı desteklemiyor.
 </video> 
 
